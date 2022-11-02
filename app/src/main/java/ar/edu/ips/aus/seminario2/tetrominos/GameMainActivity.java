@@ -134,6 +134,7 @@ public class GameMainActivity extends AppCompatActivity {
         }
 
         @Override
+        // AGREGAR ACA MENSAJE
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case GAME_FINISHED:
