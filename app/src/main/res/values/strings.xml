@@ -13,4 +13,8 @@
     <string name="game_over_message">Fin</string>
     <string name="restart_game">Reiniciar</string>
     <string name="exit_game">Salir</string>
+    <string name="begin">TETROMINOS</string>
+    <string name="easy">PRINCIPIANTE</string>
+    <string name="normal">NORMAL</string>
+    <string name="expert">AVANZADO</string>
 </resources>
