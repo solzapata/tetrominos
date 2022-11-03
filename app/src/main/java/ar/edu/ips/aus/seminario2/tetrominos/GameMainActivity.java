@@ -2,6 +2,7 @@ package ar.edu.ips.aus.seminario2.tetrominos;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,9 +31,13 @@ public class GameMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
-        Log.i(TAG, "Starting game");
-        Game game = (Game) getApplication();
-        game.reset();
+
+        Intent intent = getIntent();
+        int level_msg = intent.getIntExtra("level", 1);
+
+       Log.i(TAG, "Starting game");
+       Game game = (Game) getApplication();
+       game.reset(level_msg);
 
         PlayFieldViewModel model = initViewModel();
         initControlThread(model);

@@ -45,7 +45,7 @@
         android:layout_marginBottom="61dp"
         android:backgroundTint="#4CAF50"
         android:text="@string/normal"
-        app:layout_constraintBottom_toTopOf="@+id/hard"
+        app:layout_constraintBottom_toTopOf="@+id/expert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/hard"
+        android:id="@+id/expert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="127dp"
