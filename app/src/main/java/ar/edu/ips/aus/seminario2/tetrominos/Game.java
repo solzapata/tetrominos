@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import java.util.Random;
 
 public class Game extends Application {
-
     public static final int INITIAL_POSITION_X = 3;
     public static final int INITIAL_POSITION_Y = 0;
     public static final String TAG = "Tetro Game";
@@ -43,14 +42,13 @@ public class Game extends Application {
     private static final int LEVEL_MAX = 10;
     int startingLevel = 1;
     private int gameLevel = startingLevel;
-    private int score = 0;
+    public static int score = 0;
 
     public Game() {
         super();
         reset();
     }
 
-    // TODO TP1 use a startup activity to select initial game level
     public void reset(int initialLevel) {
         if (initialLevel > 0 && initialLevel < LEVEL_MAX) {
             startingLevel = initialLevel;

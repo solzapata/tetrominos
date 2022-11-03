@@ -2,7 +2,9 @@ package ar.edu.ips.aus.seminario2.tetrominos;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.text.BreakIterator;
+
 public class GameMainActivity extends AppCompatActivity {
 
     private static final String TAG = "Game Activity";
@@ -31,13 +35,12 @@ public class GameMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
-
         Intent intent = getIntent();
         int level_msg = intent.getIntExtra("level", 1);
 
-       Log.i(TAG, "Starting game");
-       Game game = (Game) getApplication();
-       game.reset(level_msg);
+        Log.i(TAG, "Starting game");
+        Game game = (Game) getApplication();
+        game.reset(level_msg);
 
         PlayFieldViewModel model = initViewModel();
         initControlThread(model);
@@ -139,11 +142,27 @@ public class GameMainActivity extends AppCompatActivity {
         }
 
         @Override
-        // AGREGAR ACA MENSAJE
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case GAME_FINISHED:
-                    GameOverDialog gameOverDialog = new GameOverDialog(GameMainActivity.this);
+                    int current = R.id.scoreValue;
+                    SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                    int highScore = sharedPref.getInt("key", 0);
+
+                    String data = "";
+
+                    if(current>highScore) {
+                        data = "record superado";
+
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt("key", current);
+                        editor.commit();
+                    } else {
+                        data = "fin del juego";
+                    }
+
+
+                    GameOverDialog gameOverDialog = new GameOverDialog(GameMainActivity.this, data);
                     gameOverDialog.show(getSupportFragmentManager(), "game_over");
                     break;
                 default:

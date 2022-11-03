@@ -39,11 +39,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        //Button normalButton = findViewById(R.id.normal);
-        //normalButton.setOnClickListener(v -> gameMessageHandler.sendMessage(gameMessageHandler.obtainMessage(Game.MOVE_LEFT)));
-
-        //Button expertButton = findViewById(R.id.expert);
-        //expertButton.setOnClickListener(v -> gameMessageHandler.sendMessage(gameMessageHandler.obtainMessage(Game.MOVE_LEFT)));
     }
 }

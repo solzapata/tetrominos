@@ -17,4 +17,6 @@
     <string name="easy">PRINCIPIANTE</string>
     <string name="normal">NORMAL</string>
     <string name="expert">AVANZADO</string>
+    <string name="max_points">Felicidades! Superaste el record:</string>
+    <string name="key">points</string>
 </resources>
