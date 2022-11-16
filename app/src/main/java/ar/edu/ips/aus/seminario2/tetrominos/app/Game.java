@@ -1,4 +1,4 @@
-package ar.edu.ips.aus.seminario2.tetrominos;
+package ar.edu.ips.aus.seminario2.tetrominos.app;
 
 import android.app.Application;
 import android.graphics.Point;
@@ -8,18 +8,23 @@ import androidx.annotation.NonNull;
 
 import java.util.Random;
 
+import ar.edu.ips.aus.seminario2.tetrominos.domain.Block;
+import ar.edu.ips.aus.seminario2.tetrominos.domain.PlayField;
+import ar.edu.ips.aus.seminario2.tetrominos.domain.Tetromino;
+
 public class Game extends Application {
     public static final int INITIAL_POSITION_X = 3;
     public static final int INITIAL_POSITION_Y = 0;
     public static final String TAG = "Tetro Game";
     private static final int STEP_INTERVAL = 30;
-
+    private static final int MAX_GAME_LEVEL = 10;
     public PlayField playField;
     public Tetromino currentBlock;
     public Tetromino nextBlock;
     public Point currentPosition;
-    private GameThread controlThread;
     private int progress;
+    public Point phantomPosition;
+    public boolean showPhantomBlock;
 
     private enum Status {
         INITIAL,
@@ -39,21 +44,19 @@ public class Game extends Application {
     public static final int PAUSE = 8;
     public static final int STOP = 9;
 
-    private static final int LEVEL_MAX = 10;
-    int startingLevel = 1;
-    private int gameLevel = startingLevel;
-    public static int score = 0;
+    private int gameLevel = 1;
+    private int score = 0;
 
     public Game() {
         super();
         reset();
     }
 
-    public void reset(int initialLevel) {
-        if (initialLevel > 0 && initialLevel < LEVEL_MAX) {
-            startingLevel = initialLevel;
+    public Game(int initialLevel) {
+        this();
+        if (initialLevel > 0 && initialLevel < MAX_GAME_LEVEL) {
+            gameLevel = initialLevel;
         }
-        reset();
     }
 
     public void reset() {
@@ -63,14 +66,8 @@ public class Game extends Application {
         currentBlock = newRandomBlock();
         currentPosition = new Point(INITIAL_POSITION_X, INITIAL_POSITION_Y);
         status = Status.FREE_RUN;
-        gameLevel = this.startingLevel;
+        gameLevel = 1;
         score = 0;
-    }
-
-    public @NonNull GameThread initThread() {
-        controlThread = new GameThread(this);
-        controlThread.start();
-        return controlThread;
     }
 
     /**
@@ -103,9 +100,10 @@ public class Game extends Application {
                         // future extra stuff
                     } else {
                         playField.place(currentBlock, currentPosition);
-                        int levelsCompleted = playField.removeCompleteLevels();
+                        int levelsCompleted = playField.removeCompletedLevels();
                         updateScore(levelsCompleted);
                         status = Status.INITIAL;
+                        this.showPhantomBlock = false;
                     }
                     progress = 1;
                 } else
@@ -151,6 +149,8 @@ public class Game extends Application {
             currentBlock = nextBlock;
             currentPosition = newPosition;
             nextBlock = newRandomBlock();
+            Log.i(TAG, "New block generated");
+            computePhantomBlock();
             return true;
         }
         return false;
@@ -173,6 +173,8 @@ public class Game extends Application {
         Point nextPosition = new Point(currentPosition.x + dx, currentPosition.y + dy);
         if (playField.canBePositioned(currentBlock, nextPosition)) {
             currentPosition.offset(dx, dy);
+            Log.i(TAG, "Moved free block down");
+            computePhantomBlock();
             return true;
         }
         else
@@ -187,6 +189,8 @@ public class Game extends Application {
         Point nextPosition = new Point(currentPosition.x + dx, currentPosition.y + dy);
         if (playField.canBePositioned(currentBlock, nextPosition)) {
             currentPosition.offset(dx, dy);
+            Log.i(TAG, "Moved free block right");
+            computePhantomBlock();
             return true;
         } else
             return false;
@@ -200,6 +204,8 @@ public class Game extends Application {
         Point nextPosition = new Point(currentPosition.x + dx, currentPosition.y + dy);
         if (playField.canBePositioned(currentBlock, nextPosition)) {
             currentPosition.offset(dx, dy);
+            Log.i(TAG, "Moved free block left");
+            computePhantomBlock();
             return true;
         } else
             return false;
@@ -212,6 +218,8 @@ public class Game extends Application {
         Block newBlock = new Block(currentBlock.rotateCells(true));
         if (playField.canBePositioned(newBlock, currentPosition)) {
             currentBlock.rotateClockwise();
+            Log.i(TAG, "Rotated free block CW");
+            computePhantomBlock();
             return true;
         } else
             return false;
@@ -224,6 +232,8 @@ public class Game extends Application {
         Block newBlock = new Block(currentBlock.rotateCells(false));
         if (playField.canBePositioned(newBlock, currentPosition)) {
             currentBlock.rotateCounterClockwise();
+            Log.i(TAG, "Rotated free block CCW");
+            computePhantomBlock();
             return true;
         } else
             return false;
@@ -241,6 +251,23 @@ public class Game extends Application {
         }
         nextPosition.offset(dx, -dy);
         currentPosition = nextPosition;
+        Log.i(TAG, "Free block fall down");
+        return false;
+    }
+
+    public boolean computePhantomBlock() {
+        if (status != Status.FREE_RUN)
+            return false;
+
+        int dx = 0, dy = 1;
+        Point nextPosition = new Point(currentPosition.x, currentPosition.y);
+        nextPosition.offset(dx, dy);
+        while (playField.canBePositioned(currentBlock, nextPosition)) {
+            nextPosition.offset(dx, dy);
+        }
+        nextPosition.offset(dx, -dy);
+        phantomPosition = nextPosition;
+        this.showPhantomBlock = true;
         return false;
     }
 

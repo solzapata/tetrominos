@@ -7,7 +7,7 @@
     android:background="@drawable/background"
     android:foregroundGravity="center_vertical"
     app:layout_anchorGravity="center_vertical"
-    tools:context=".GameMainActivity">
+    tools:context=".infra.ui.GameMainActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"

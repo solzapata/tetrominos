@@ -11,7 +11,7 @@
     <string name="level_value">0</string>
     <string name="level_title">NIVEL</string>
     <string name="game_over_message">Fin</string>
-    <string name="restart_game">Reiniciar</string>
+    <string name="continue_game">SIGUIENTE</string>
     <string name="exit_game">Salir</string>
     <string name="begin">TETROMINOS</string>
     <string name="easy">PRINCIPIANTE</string>
@@ -19,4 +19,6 @@
     <string name="expert">AVANZADO</string>
     <string name="max_points">Felicidades! Superaste el record:</string>
     <string name="key">points</string>
+    <string name="title_activity_hall_of_fame">Hall of Fame</string>
+    <string name="player_name">Jugador</string>
 </resources>

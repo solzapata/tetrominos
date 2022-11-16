@@ -4,7 +4,7 @@
     package="ar.edu.ips.aus.seminario2.tetrominos">
 
     <application
-        android:name=".Game"
+        android:name="ar.edu.ips.aus.seminario2.tetrominos.app.Game"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -26,12 +26,17 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".GameMainActivity"
+            android:name=".infra.ui.HallOfFameActivity"
+            android:exported="false"
+            android:label="@string/title_activity_hall_of_fame"
+            android:theme="@style/Theme.Tetrominos.NoActionBar" />
+        <activity
+            android:name=".infra.ui.GameMainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
