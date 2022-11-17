@@ -18,5 +18,6 @@
     <string name="easy">PRINCIPIANTE</string>
     <string name="normal">NORMAL</string>
     <string name="expert">AVANZADO</string>
+    <string name="reset">Reiniciar</string>
 
 </resources>
