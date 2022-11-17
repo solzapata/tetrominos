@@ -3,6 +3,7 @@ package ar.edu.ips.aus.seminario2.tetrominos.infra.ui;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -178,8 +180,10 @@ public class GameMainActivity extends AppCompatActivity {
                     helper.newHighScore = msg.arg1 > scoreThreshold ? true : false;
                     helper.repo = dataRepository;
                     helper.playerScore = msg.arg1;
-                    // TODO TP2 recuperar el nombre del jugador
-                    //  de las SharedPreferences, puede ser conveniente en este punto
+
+                    SharedPreferences pref = getPreferences(MODE_PRIVATE);
+                    String username = pref.getString("username", "");
+
                     DialogFragment gameOverDialog =
                             new GameOverDialog(GameMainActivity.this, helper);
                     gameOverDialog.show(getSupportFragmentManager(), "High score");
@@ -225,7 +229,6 @@ public class GameMainActivity extends AppCompatActivity {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             Log.v(MOTION_TAG, "single tap up detected!");
-            // TODO TP2 implemente movimiento a la derecha e izquierda
             float XCord = e.getX();
             if (XCord > 500) {
                 return gameMessageHandler.sendMessage(gameMessageHandler.obtainMessage(Game.MOVE_RIGHT));
