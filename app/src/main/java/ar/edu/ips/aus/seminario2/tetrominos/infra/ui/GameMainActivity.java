@@ -222,10 +222,13 @@ public class GameMainActivity extends AppCompatActivity {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             Log.v(MOTION_TAG, "single tap up detected!");
-            // TODO TP2 implemente movimiento a la derecha e izquierda
-            return false;
+            float XCord = e.getX();
+            if (XCord > 500) {
+                return gameMessageHandler.sendMessage(gameMessageHandler.obtainMessage(Game.MOVE_RIGHT));
+            }
+            return gameMessageHandler.sendMessage(gameMessageHandler.obtainMessage(Game.MOVE_LEFT));
         }
-
+        
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             return false;
