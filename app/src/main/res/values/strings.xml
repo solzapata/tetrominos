@@ -15,5 +15,8 @@
     <string name="exit_game">Salir</string>
     <string name="title_activity_hall_of_fame">Hall of Fame</string>
     <string name="player_name">Jugador</string>
+    <string name="easy">PRINCIPIANTE</string>
+    <string name="normal">NORMAL</string>
+    <string name="expert">AVANZADO</string>
 
 </resources>

@@ -45,8 +45,9 @@ public class Game extends Application {
     public static final int PAUSE = 8;
     public static final int STOP = 9;
 
-    private int gameLevel = 1;
     private int score = 0;
+    int startingLevel = 1;
+    private int gameLevel = startingLevel;
 
     public Game() {
         super();
@@ -60,6 +61,13 @@ public class Game extends Application {
         }
     }
 
+    public void reset(int initialLevel) {
+        if (initialLevel > 0 && initialLevel < MAX_GAME_LEVEL) {
+            startingLevel = initialLevel;
+        }
+        reset();
+    }
+
     public void reset() {
         playField = new PlayField(PlayField.HORIZONTAL_SIZE, PlayField.VERTICAL_SIZE);
 
@@ -67,7 +75,7 @@ public class Game extends Application {
         currentBlock = newRandomBlock();
         currentPosition = new Point(INITIAL_POSITION_X, INITIAL_POSITION_Y);
         status = Status.FREE_RUN;
-        gameLevel = 1;
+        gameLevel = this.startingLevel;
         score = 0;
     }
 

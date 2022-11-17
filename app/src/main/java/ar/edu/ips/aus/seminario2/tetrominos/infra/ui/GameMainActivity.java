@@ -50,8 +50,11 @@ public class GameMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_board);
 
+        Intent intent = getIntent();
+        int level_msg = intent.getIntExtra("level", 1);
+
         Game game = (Game) getApplication();
-        game.reset();
+        game.reset(level_msg);
         Log.i(TAG, "Init game");
 
         PlayFieldViewModel model = initViewModel();
