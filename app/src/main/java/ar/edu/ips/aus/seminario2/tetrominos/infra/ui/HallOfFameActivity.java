@@ -26,10 +26,6 @@ public class HallOfFameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hall_of_fame);
 
-        Game game = (Game) getApplication();
-        Intent intent = getIntent();
-        int level_msg = intent.getIntExtra("level", 1);
-
         RecyclerView highestScoresListView = findViewById(R.id.highest_scores);
         highestScoresListView.setLayoutManager(new LinearLayoutManager(this));
 

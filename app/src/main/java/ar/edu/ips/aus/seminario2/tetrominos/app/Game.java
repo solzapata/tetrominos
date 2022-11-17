@@ -24,7 +24,7 @@ public class Game extends Application {
     public Tetromino nextBlock;
     public Point currentPosition;
     private int progress;
-    public Point phantomPosition;
+    public Point phantomPosition = new Point(0,0);
     public boolean showPhantomBlock;
 
     private enum Status {
@@ -46,24 +46,17 @@ public class Game extends Application {
     public static final int STOP = 9;
 
     private int score = 0;
-    int startingLevel = 1;
-    private int gameLevel = startingLevel;
+    int gameLevel = 1;
+    private int startingLevel = gameLevel;
 
     public Game() {
         super();
         reset();
     }
 
-    public Game(int initialLevel) {
-        this();
-        if (initialLevel > 0 && initialLevel < MAX_GAME_LEVEL) {
-            gameLevel = initialLevel;
-        }
-    }
-
     public void reset(int initialLevel) {
         if (initialLevel > 0 && initialLevel < MAX_GAME_LEVEL) {
-            startingLevel = initialLevel;
+            gameLevel = initialLevel;
         }
         reset();
     }
@@ -75,7 +68,7 @@ public class Game extends Application {
         currentBlock = newRandomBlock();
         currentPosition = new Point(INITIAL_POSITION_X, INITIAL_POSITION_Y);
         status = Status.FREE_RUN;
-        gameLevel = this.startingLevel;
+        startingLevel = gameLevel;
         score = 0;
     }
 
